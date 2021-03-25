@@ -1,7 +1,18 @@
 import { BalloonPanelView } from 'ckeditor5/src/ui';
 
-export function isCaptionable(modelElement) {
+export function isBlockImage(modelElement) {
+  return !!modelElement && modelElement.is('element', 'image');
+}
+
+export function isInlineImage(modelElement) {
   return !!modelElement && modelElement.is('element', 'imageInline');
+}
+
+/**
+ * This will eventually also check for drupalMedia.
+ */
+export function isCaptionable(modelElement) {
+  return isInlineImage(modelElement) || isBlockImage(modelElement);
 }
 
 export function getSelectedWidget(selection) {
@@ -41,4 +52,22 @@ export function repositionContextualBalloon(editor) {
 
     balloon.updatePosition(position);
   }
+}
+
+export function getViewImageFromWidget(figureView) {
+  if (figureView.is('element', 'img')) {
+    return figureView;
+  }
+
+  const figureChildren = [];
+
+  for (const figureChild of figureView.getChildren()) {
+    figureChildren.push(figureChild);
+
+    if (figureChild.is('element')) {
+      figureChildren.push(...figureChild.getChildren());
+    }
+  }
+
+  return figureChildren.find((viewChild) => viewChild.is('element', 'img'));
 }
