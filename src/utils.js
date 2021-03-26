@@ -12,7 +12,7 @@ export function isInlineImage(modelElement) {
  * This will eventually also check for drupalMedia.
  */
 export function isCaptionable(modelElement) {
-  return isInlineImage(modelElement) || isBlockImage(modelElement);
+  return isBlockImage(modelElement);
 }
 
 export function getSelectedWidget(selection) {
