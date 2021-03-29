@@ -1,5 +1,9 @@
 import { BalloonPanelView } from 'ckeditor5/src/ui';
 
+export function isDrupalMedia(modelElement) {
+  return !!modelElement && modelElement.is('element', 'drupalMedia');
+}
+
 export function isBlockImage(modelElement) {
   return !!modelElement && modelElement.is('element', 'image');
 }
@@ -12,7 +16,7 @@ export function isInlineImage(modelElement) {
  * This will eventually also check for drupalMedia.
  */
 export function isCaptionable(modelElement) {
-  return isBlockImage(modelElement);
+  return isBlockImage(modelElement) || isDrupalMedia(modelElement);
 }
 
 export function getSelectedWidget(selection) {
